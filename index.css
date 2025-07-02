@@ -1,0 +1,955 @@
+/* Importa la fuente 'Outfit' de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&display=swap');
+
+/* Variables CSS para colores y otros valores comunes. Facilita cambiar el tema. */
+:root {
+    --primary-color: #FF4800; /* Naranja fuerte para acentos */
+    --secondary-color: #FF9D00; /* Naranja más suave */
+    --text-color-light: #FFFFFF; /* Color de texto para fondos oscuros */
+    --text-color-dark: #333333; /* Color de texto para fondos claros */
+    --background-light: #F8F8F8; /* Fondo claro general */
+    --background-dark: #222222; /* Fondo oscuro para footer, etc. */
+    --wave-fill: #F8F8F8; /* Color de relleno para la onda SVG */
+    --blur-overlay-color: rgba(0, 0, 0, 0.4); /* Color para el overlay de blur */
+}
+
+/* Reset y estilos base para asegurar consistencia en navegadores */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Incluye padding y borde en el ancho/alto del elemento */
+    font-family: 'Outfit', sans-serif;
+    scroll-behavior: smooth; /* Desplazamiento suave al hacer clic en enlaces */
+}
+
+html, body {
+    width: 100%;
+    overflow-x: hidden; /* Evita el desplazamiento horizontal */
+    color: var(--text-color-dark);
+}
+
+/* Estilos generales para todas las secciones */
+section {
+    width: 100%;
+    min-height: 100vh; /* Asegura que cada sección ocupe al menos toda la altura de la ventana */
+    display: flex; /* Usamos flexbox para alinear el contenido */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 0; /* Padding vertical general para secciones */
+    text-align: center;
+}
+
+/* --- Encabezado y Navegación --- */
+.main-header {
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente */
+    color: var(--text-color-light);
+    padding: 15px 30px;
+    position: fixed; /* Fijo en la parte superior al hacer scroll */
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000; /* Asegura que esté por encima de todo */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+}
+
+/* Estado del header cuando se hace scroll */
+.main-header.scrolled {
+    background-color: rgba(0, 0, 0, 0.95); /* Más oscuro al hacer scroll */
+}
+
+.main-nav .nav-list {
+    list-style: none; /* Quita los puntos de la lista */
+    display: flex;
+    gap: 25px; /* Espacio entre los elementos del menú */
+}
+
+.main-nav .nav-list a {
+    color: var(--text-color-light);
+    text-decoration: none; /* Quita el subrayado */
+    font-weight: 400;
+    font-size: 1.1em;
+    padding: 8px 15px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+}
+
+.main-nav .nav-list a:hover,
+.main-nav .nav-list a.active { /* Estado activo o al pasar el ratón */
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    transform: translateY(-2px); /* Pequeño efecto de "levantar" */
+}
+
+/* Botón de navegación (hamburguesa) - oculto por defecto en desktop */
+.nav-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-color-light);
+    font-size: 2.2em;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* --- Sección Principal (Hero Section) --- */
+.hero-section {
+    background: url("imgs/titlePage.jpg") center center / cover no-repeat; /* Imagen de fondo que cubre toda la sección */
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end; /* Alinea el contenido al final de la sección */
+    align-items: center;
+    text-align: center;
+    color: var(--text-color-light);
+    padding-bottom: 0; /* La onda SVG maneja el espacio inferior */
+    overflow: hidden; /* Asegura que nada se desborde */
+}
+
+.hero-section::before { /* Overlay oscuro y desenfoque para mejorar la legibilidad del texto */
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35); /* Capa oscura */
+    backdrop-filter: blur(3px); /* Efecto de desenfoque */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Asegura que el texto esté por encima del overlay */
+    margin-bottom: 8vh; /* Espacio desde la parte inferior */
+    display: flex;
+    flex-direction: column;
+    row-gap: 7vh;
+    animation: fadeInScale 1.5s ease-out both; /* Animación de entrada */
+}
+
+@keyframes fadeInScale { /* Animación para el hero-content */
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.hero-content h1 {
+    font-size: clamp(2.8rem, 6vw, 4.8rem); /* Tamaño responsivo del título principal */
+    text-shadow: black 0.25rem 0.25rem 0.6rem;
+    line-height: 1.2;
+}
+
+.hero-content h1 span {
+    font-size: clamp(7rem, 15vw, 16rem); /* Tamaño gigante para "La Guaira" */
+    display: block; /* Para que ocupe su propia línea */
+    font-weight: 900;
+}
+
+.hero-content p {
+    font-size: clamp(1.2rem, 2vw, 2rem);
+    margin-top: 20px;
+    text-shadow: black 0.15rem 0.15rem 0.4rem;
+    font-weight: 300;
+}
+
+.hero-content p span {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    display: block;
+    font-weight: 700;
+}
+
+/* Estilos para la onda SVG */
+.hero-wave {
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg); /* Rota la forma para que la parte "alta" quede arriba */
+    z-index: 3; /* Asegura que la onda cubra el contenido si es necesario */
+}
+
+.hero-wave svg {
+    display: block;
+    width: calc(100% + 1.3px); /* Ajuste para evitar pequeños huecos */
+    height: 100%; /* Altura de la onda */
+    transform: rotateY(180deg); /* Si la forma SVG está invertida, la volvemos a rotar */
+}
+
+.hero-wave .shape-fill {
+    fill: var(--wave-fill); /* Usa la variable de color para la onda */
+}
+
+/* --- Sección de Introducción --- */
+.intro-section {
+    display: flex;
+    flex-direction: row; /* Imagen a la izquierda, texto a la derecha por defecto */
+    align-items: stretch; /* Asegura que ambos divs ocupen toda la altura disponible */
+    padding: 0; /* El padding se maneja dentro de los divs de imagen y texto */
+    background-color: var(--background-light);
+    color: var(--text-color-dark);
+    overflow: visible;
+    position: relative;
+    z-index: 3;
+}
+
+.intro-image {
+    width: 50%; /* La mitad de la sección para la imagen */
+    background: url("imgs/intro.jpg") center center / 100% 100% no-repeat;
+    aspect-ratio: 1;
+    clip-path: shape(from 79.33% 83.55%,curve to 68.49% 93.23% with 74.82% 89.10%,curve to 54.69% 95.69% with 62.16% 97.36%,curve to 39.91% 93.99% with 47.23% 94.01%,curve to 27.22% 89.00% with 32.59% 93.96%,curve to 15.26% 80.13% with 21.84% 84.04%,curve to 5.15% 69.32% with 8.68% 76.22%,curve to 3.08% 54.78% with 1.62% 62.42%,curve to 8.16% 41.00% with 4.53% 47.14%,curve to 15.22% 29.47% with 11.78% 34.87%,curve to 21.44% 16.73% with 18.66% 24.08%,curve to 32.14% 10.33% with 24.22% 9.38%,curve to 46.22% 11.69% with 40.06% 11.28%,curve to 59.00% 11.33% with 52.38% 12.10%,curve to 71.85% 13.31% with 65.61% 10.57%,curve to 81.51% 21.94% with 78.08% 16.06%,curve to 87.06% 33.88% with 84.94% 27.83%,curve to 92.56% 46.41% with 89.18% 39.94%,curve to 95.84% 60.50% with 95.93% 52.89%,curve to 89.80% 73.06% with 95.75% 68.11%,curve to 79.33% 83.55% with 83.85% 78.00%);
+    /*border-radius: 39% 61% 58% 42% / 35% 72% 28% 65% ;*/
+    position: relative;
+    bottom: 2.5vh;
+    display: flex;
+    justify-content: flex-end; /* Alinea la bandera a la derecha */
+    align-items: flex-end; /* Alinea la bandera hacia abajo */
+    z-index: 1;
+    animation-name: clipShape;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-direction: alternate-reverse;
+}
+
+@keyframes clipShape {
+    0% {
+        clip-path: shape(from 79.33% 83.55%,curve to 68.49% 93.23% with 74.82% 89.10%,curve to 54.69% 95.69% with 62.16% 97.36%,curve to 39.91% 93.99% with 47.23% 94.01%,curve to 27.22% 89.00% with 32.59% 93.96%,curve to 15.26% 80.13% with 21.84% 84.04%,curve to 5.15% 69.32% with 8.68% 76.22%,curve to 3.08% 54.78% with 1.62% 62.42%,curve to 8.16% 41.00% with 4.53% 47.14%,curve to 15.22% 29.47% with 11.78% 34.87%,curve to 21.44% 16.73% with 18.66% 24.08%,curve to 32.14% 10.33% with 24.22% 9.38%,curve to 46.22% 11.69% with 40.06% 11.28%,curve to 59.00% 11.33% with 52.38% 12.10%,curve to 71.85% 13.31% with 65.61% 10.57%,curve to 81.51% 21.94% with 78.08% 16.06%,curve to 87.06% 33.88% with 84.94% 27.83%,curve to 92.56% 46.41% with 89.18% 39.94%,curve to 95.84% 60.50% with 95.93% 52.89%,curve to 89.80% 73.06% with 95.75% 68.11%,curve to 79.33% 83.55% with 83.85% 78.00%);
+    }
+    100% {
+        clip-path: shape(from 80.66% 84.95%,curve to 68.94% 94.07% with 75.61% 90.35%,curve to 54.68% 97.08% with 62.27% 97.79%,curve to 39.64% 95.67% with 47.08% 96.37%,curve to 26.27% 90.40% with 32.19% 94.97%,curve to 14.34% 81.14% with 20.36% 85.83%,curve to 4.96% 69.44% with 8.32% 76.45%,curve to 2.18% 54.73% with 1.60% 62.43%,curve to 5.62% 40.29% with 2.76% 47.03%,curve to 12.13% 27.63% with 8.47% 33.56%,curve to 19.80% 15.22% with 15.79% 21.70%,curve to 31.44% 8.07% with 23.82% 8.74%,curve to 45.87% 7.35% with 39.06% 7.40%,curve to 59.71% 7.52% with 52.69% 7.30%,curve to 73.16% 10.98% with 66.73% 7.74%,curve to 83.72% 20.10% with 79.60% 14.22%,curve to 90.37% 32.48% with 87.85% 25.98%,curve to 95.20% 45.99% with 92.88% 38.99%,curve to 96.78% 60.61% with 97.52% 52.99%,curve to 90.88% 73.89% with 96.05% 68.23%,curve to 80.66% 84.95% with 85.72% 79.55%);
+    }
+}
+
+.intro-image svg {
+    position: absolute;
+}
+
+.flag-overlay {
+    height: 23%; /* Tamaño de la bandera */
+    width: 23%;
+    background: url("imgs/flag.svg") center center / 100% 100% no-repeat; /* La bandera se escala para encajar */
+    box-shadow: rgba(0, 0, 0, 0.6) 25px 25px 15px; /* Sombra sutil */
+    transform: perspective(1000px) rotateZ(-2.5deg) rotateX(10deg) rotateY(-25deg); /* Efecto 3D */
+    position: absolute; /* Necesario para que el box-shadow funcione bien */
+    inset: 0;
+    top: 75%;
+    left: 25%;
+    z-index: 1;
+    /* Ajustes para la bandera: asegurar calidad y evitar artefactos */
+    image-rendering: -webkit-optimize-contrast; /* Webkit browsers */
+    image-rendering: crisp-edges; /* Firefox */
+    image-rendering: pixelated; /* Safari, Chrome, Edge (modern) */
+    shape-rendering: geometricPrecision; /* SVG rendering */
+    -webkit-font-smoothing: antialiased; /* Para texto en SVG */
+}
+
+
+.intro-text {
+    width: 50%; /* La otra mitad para el texto */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start; /* Alinea el texto a la izquierda */
+    padding: 60px;
+    text-align: justify;
+}
+
+.intro-text h2 {
+    font-size: clamp(2.2rem, 4vw, 5rem);
+    margin-left: 5%;
+    margin-bottom: 3%;
+    color: var(--primary-color);
+    text-align: left;
+    width: 100%; /* Asegura que el título ocupe todo el ancho disponible */
+}
+
+.intro-text p {
+    font-size: clamp(1rem, 2vw, 1.7rem);
+    line-height: 1.7;
+    margin-bottom: 5%;
+    margin-left: 1.5%;
+    text-indent: 2.5em; /* Sangría para los párrafos */
+}
+
+/* --- Sección de Contexto General (nueva estructura) --- */
+.context-section {
+    background: linear-gradient(142deg, var(--primary-color) 3%, var(--secondary-color) 97%);
+    color: var(--text-color-light);
+    padding: 80px 40px;
+    position: relative; /* Necesario para el overlay de blur */
+    transition: background-image 0.5s ease-in-out, background-color 0.5s ease-in-out;
+    overflow: hidden;
+}
+
+.context-section .context-wave1 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.context-section .context-wave1 svg {
+    width: calc(100% + 1.3px);
+    position: relative;
+    transform: rotate(180deg);
+}
+
+.context-section .context-wave1 svg path {
+    fill: var(--wave-fill);
+    position: absolute;
+    inset: 0;
+    bottom: 1vh;
+    transform-origin: bottom;
+    transform: scaleY(0.3);
+}
+
+.context-section .context-wave2 {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+}
+
+.context-section .context-wave2 svg {
+    width: calc(100% + 1.3px);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+}
+
+.context-section .context-wave2 svg path {
+    fill: var(--wave-fill);
+    transform-origin: bottom;
+    transform: scaleY(0.7);
+}
+
+/* Overlay para la sección de contexto general */
+.context-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent; /* Inicialmente transparente */
+    backdrop-filter: blur(0px); /* Sin blur inicial */
+    z-index: 1;
+    transition: background 0.5s ease, backdrop-filter 0.5s ease;
+}
+/* Activa el overlay de blur cuando hay un ítem activo */
+.context-section.blurred::before {
+    background: var(--blur-overlay-color); /* Color oscuro semi-transparente */
+    backdrop-filter: blur(8px); /* Blur más pronunciado */
+}
+
+.context-section h1 {
+    font-size: clamp(2.8rem, 4.5vw, 4.5rem);
+    text-shadow: rgba(0, 0, 0, 0.5) 0.3rem 0.3rem 0.6rem;
+    margin-top: 30px;
+    margin-bottom: 60px;
+    padding: 0 10%;
+    position: relative; /* Por encima del overlay */
+    z-index: 2;
+}
+
+.context-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(30vw, 1fr)); /* 3 columnas en desktop, se ajusta */
+    gap: 1%;
+    max-width: 95vw;
+    margin: 0 auto 80px auto; /* Espacio antes de la subsección */
+    position: relative;
+    z-index: 2;
+}
+
+.context-item {
+    height: fit-content;
+    background-color: rgba(255, 255, 255, 0.15); /* Fondo semitransparente para las cajas */
+    border-radius: 15px;
+    padding: 35px;
+    text-align: left;
+    transition: transform 0.5s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Overlay interno para resaltar el ítem activo */
+.context-item::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: transparent; /* Inicialmente transparente */
+    backdrop-filter: blur(0px);
+    z-index: 1;
+    transition: background-color 0.4s ease, backdrop-filter 0.4s ease;
+    border-radius: 15px;
+}
+
+.context-item.active { /* Estado "activo" del ítem */
+    background-color: rgba(255, 255, 255, 0.3); /* Más claro para resaltar */
+    transform: translateY(-15px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    z-index: 3; /* Asegura que el activo esté por encima de todo lo demás */
+}
+
+.context-item.active::before {
+    background: rgba(255, 255, 255, 0.1); /* Fondo claro con blur para el activo */
+    backdrop-filter: blur(5px);
+}
+
+.context-item h2, .context-item p, .concept-image-placeholder {
+    position: relative;
+    z-index: 2; /* Asegura que el contenido esté por encima del overlay */
+    text-shadow: rgba(0, 0, 0, 0.6) 0.1rem 0.1rem 0.3rem;
+}
+
+.context-item h2 {
+    font-size: clamp(2rem, 2.8vw, 3rem);
+    margin-bottom: 18px;
+    color: var(--text-color-light); /* Asegura que el título sea blanco */
+}
+
+.context-item p {
+    font-size: clamp(1rem, 1.2vw, 1.3rem);
+    line-height: 1.7;
+    text-indent: 1.5em;
+    margin-bottom: 20px; /* Espacio antes de la imagen */
+}
+
+.concept-image-placeholder {
+    width: 100%;
+    height: 200px; /* Altura fija para el placeholder de imagen */
+    background-color: rgba(255, 255, 255, 0.1); /* Fondo para el placeholder */
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Para que la imagen no se salga */
+    border: 1px dashed rgba(255, 255, 255, 0.4); /* Borde punteado para indicar que es un placeholder */
+}
+
+.concept-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre el espacio manteniendo la proporción */
+    display: block;
+    border-radius: 8px;
+}
+
+/* Estilos para la subsección de Alimentación y Salud */
+.food-health-subsection {
+    background-color: rgba(255, 255, 255, 0.2); /* Un poco más oscuro */
+    border-radius: 15px;
+    padding: 45px;
+    max-width: 100%;
+    margin: 60px 5% 0 5%; /* Espacio superior */
+    text-align: justify;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 2;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.food-health-subsection div:last-child{
+    margin-top: 1vh;
+    height: 35vh;
+    width: 86.35%;
+    position: relative;
+    left: 7%;
+}
+/*.food-health-subsection div:last-child img{
+    object-fit: cover;
+}*/
+
+.food-health-subsection h2 {
+    font-size: clamp(2.2rem, 3.2vw, 3.5rem);
+    margin-bottom: 30px;
+    text-align: center;
+    color: var(--text-color-light);
+    text-shadow: rgba(0, 0, 0, 0.6) 0.1rem 0.1rem 0.3rem;
+}
+.food-health-subsection div {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: no-wrap;
+}
+.food-health-subsection div p {
+    font-size: clamp(1rem, 1.3vw, 1.3rem);
+    line-height: 1.3;
+    margin-bottom: 25px;
+    margin-left: 3%;
+    /*text-align: center;*/
+    text-indent: 2.5em;
+    color: var(--text-color-light);
+    text-shadow: rgba(0, 0, 0, 0.7) 0.05rem 0.05rem 0.15rem;
+}
+
+
+/* --- Estilos para secciones de contenido general (texto con párrafos/listas) --- */
+.typical-dishes-section,
+.cultural-traditions-section,
+.gastronomic-route-section,
+.conclusion-section {
+    padding: 80px 5%; /* Padding horizontal para el texto */
+    text-align: center; /* Alinea el texto a la izquierda en estas secciones */
+    background-color: var(--background-light);
+    color: var(--text-color-dark);
+}
+
+/* Títulos de sección */
+.typical-dishes-section h2,
+.cultural-traditions-section h2,
+.gastronomic-route-section h2,
+.conclusion-section h2 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    margin-bottom: 50px;
+    text-align: center;
+    color: var(--primary-color);
+}
+.conclusion-section p {
+    font-size: 1.75em;
+}
+
+/* Grid para Platos Típicos y Tradiciones Culturales */
+.dish-grid,
+.traditions-grid { /* Nuevo nombre para el grid de tradiciones */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(33%, 1fr)); /* Columnas responsivas */
+    gap: 50px; /* Espacio entre los elementos de la cuadrícula */
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.dish-item,
+.tradition-item {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    padding: 35px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.dish-item:hover,
+.tradition-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+}
+
+.dish-item h3,
+.tradition-item h3 {
+    font-size: clamp(1.6rem, 2vw, 2rem);
+    color: var(--primary-color);
+    margin-bottom: 18px;
+}
+
+.dish-item p,
+.tradition-item p {
+    font-size: clamp(1rem, 1.15vw, 1.25rem);
+    line-height: 1.7;
+    text-indent: 1.5em;
+}
+
+/* Estilos para los placeholders de imagen dentro de .dish-item y .tradition-item */
+.dish-image-placeholder,
+.tradition-image-placeholder {
+    width: 100%;
+    height: 200px; /* Altura fija para la imagen */
+    background-color: #f0f0f0; /* Fondo gris claro */
+    border-radius: 8px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dashed #ccc; /* Borde punteado para indicar placeholder */
+}
+
+.dish-image-placeholder img,
+.tradition-image-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre el espacio manteniendo la proporción */
+    display: block;
+    border-radius: 8px;
+}
+
+
+/* Ruta Gastronómica - Mapa y Lista numerada personalizada */
+.gastronomic-route-section ol {
+    list-style: none; /* Quita los puntos/números por defecto */
+    counter-reset: route-step; /* Inicia un contador CSS personalizado */
+    padding-left: 0;
+    max-width: 900px; /* Ancho máximo para la legibilidad */
+    margin: 0 auto;
+}
+
+.map-placeholder {
+    margin-bottom: 60px; /* Espacio debajo del mapa */
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 35vw;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.map-placeholder h3 {
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+.map-placeholder p {
+    font-size: clamp(0.95rem, 1.1vw, 1.15rem);
+    color: #666;
+    margin-bottom: 25px;
+    line-height: 1.6;
+}
+
+.map-container {
+    width: 100%;
+    height: 450px; /* Altura del contenedor del mapa */
+    background-color: #e0e0e0; /* Fondo para el mapa */
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.map-container iframe {
+    border: none; /* Quita el borde del iframe */
+    width: 100%;
+    height: 100%;
+}
+
+
+.gastronomic-route-section ol li {
+    margin-bottom: 50px;
+    position: relative;
+    padding-left: 80px; /* Espacio para el número personalizado */
+    text-align: left;
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gastronomic-route-section ol li:hover {
+    transform: translateX(10px) scale(1.01);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.gastronomic-route-section ol li::before {
+    counter-increment: route-step; /* Incrementa el contador */
+    content: counter(route-step); /* Muestra el número del contador */
+    position: absolute;
+    inset: 0;
+    left: -1.3vw; /* Posiciona el número a la izquierda */
+    top: -3vh;
+    background-color: var(--primary-color);
+    color: var(--text-color-light);
+    border-radius: 50%; /* Hace el círculo */
+    width: 55px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border: 3px solid var(--text-color-light);
+}
+
+.gastronomic-route-section ol li h3 {
+    font-size: clamp(1.8rem, 2.4vw, 2.2rem);
+    color: var(--primary-color);
+    margin-bottom: 12px;
+}
+
+.gastronomic-route-section ol li p {
+    font-size: clamp(1rem, 1.2vw, 1.3rem);
+    line-height: 1.7;
+    text-indent: 1.5em;
+}
+
+.gastronomic-route-section .route-description {
+    margin-top: 60px;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    font-size: clamp(1rem, 1.2vw, 1.3rem);
+}
+
+/* Pie de Página con Bibliografía */
+.main-footer {
+    background-color: var(--background-dark);
+    color: var(--text-color-light);
+    padding: 40px 20px;
+    text-align: center;
+    font-size: 0.95em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px; /* Espacio entre los elementos del footer */
+}
+
+.main-footer p {
+    margin: 0;
+}
+
+.bibliography {
+    margin-top: 20px;
+    max-width: 800px;
+    text-align: left;
+}
+
+.bibliography h3 {
+    font-size: 1.4em;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
+    text-align: center;
+}
+
+.bibliography ul {
+    list-style: disc; /* Puntos de lista */
+    padding-left: 20px;
+}
+
+.bibliography ul li {
+    margin-bottom: 8px;
+    line-height: 1.5;
+    font-size: 0.9em;
+}
+
+.bibliography ul li a {
+    color: var(--secondary-color);
+    text-decoration: none;
+}
+
+/* --- Media Queries para Responsividad (Adaptación a diferentes tamaños de pantalla) --- */
+
+/* Para tablets y pantallas medianas */
+@media (max-width: 1024px) {
+    .intro-section {
+        flex-direction: column; /* Apila imagen y texto verticalmente */
+    }
+
+    .intro-image {
+        width: 100%; /* Ocupan todo el ancho */
+    }
+    .intro-text {
+        width: 100%; /* Ocupan todo el ancho */
+        padding: 40px;
+    }
+
+    .intro-image {
+        height: 50vh; /* Altura de la imagen en dispositivos medianos */
+        align-items: end;
+        align-items: start;
+        overflow: visible;
+    }
+
+    .flag-overlay {
+        max-height: 15%;
+        min-width: 35%;
+        position: absolute;
+        inset: 0;
+        top: 33%;
+        left: 60%;
+        transform: perspective(1000px) rotateZ(-2.5deg) rotateX(8deg) rotateY(-18deg);
+    }
+
+    .intro-text {
+        padding: 40px;
+    }
+
+    .context-grid {
+        grid-template-columns: 1fr; /* Una columna para las cajas */
+        padding: 0 20px;
+    }
+
+    .context-item {
+        width: 95%; /* Las cajas ocupan casi todo el ancho */
+        padding: 30px;
+    }
+
+    .food-health-subsection {
+        padding: 35px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .dish-grid,
+    .traditions-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Más pequeñas para que quepan */
+        gap: 30px;
+        padding: 0 5%;
+    }
+
+    .gastronomic-route-section ol li {
+        padding-left: 70px;
+        padding: 25px;
+    }
+
+    .gastronomic-route-section ol li::before {
+        width: 45px;
+        height: 45px;
+        font-size: 1.8em;
+        left: 15px;
+        top: 25px;
+    }
+}
+
+/* Para móviles y pantallas pequeñas */
+@media (max-width: 768px) {
+    /* Oculta el menú principal y muestra el botón de hamburguesa */
+    .main-nav {
+        position: absolute;
+        top: 100%; /* Aparece justo debajo del header */
+        left: 0;
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.98); /* Fondo oscuro para el menú móvil */
+        flex-direction: column;
+        align-items: center;
+        padding: 20px 0;
+        transform: translateY(-100%); /* Oculto por defecto, se mueve hacia arriba */
+        transition: transform 0.4s ease-in-out;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .main-nav.active {
+        transform: translateY(0); /* Visible cuando tiene la clase 'active' */
+    }
+
+    .main-nav .nav-list {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: 0;
+    }
+
+    .main-nav .nav-list li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador entre ítems */
+    }
+
+    .main-nav .nav-list li:last-child {
+        border-bottom: none;
+    }
+
+    .main-nav .nav-list a {
+        display: block; /* Ocupa todo el ancho */
+        padding: 15px 0;
+        font-size: 1.3em;
+    }
+
+    .nav-toggle {
+        display: block; /* Muestra el botón de toggle */
+    }
+
+    .hero-content h1 span {
+        font-size: clamp(5rem, 12vw, 10rem); /* Ajuste de tamaño para móviles */
+    }
+
+    .hero-content h1 {
+        font-size: clamp(2.2rem, 5vw, 3.5rem);
+    }
+
+    .hero-wave svg {
+        height: 90px; /* Ola más pequeña en móviles */
+    }
+
+    .intro-image {
+        height: 40vh;
+    }
+
+    .flag-overlay {
+        height: 180px;
+        width: 140px;
+        transform: perspective(1000px) rotateZ(-2.5deg) rotateX(5deg) rotateY(-10deg);
+    }
+
+    .intro-text {
+        padding: 30px;
+    }
+
+    .food-health-subsection {
+        padding: 30px;
+    }
+
+    .typical-dishes-section,
+    .cultural-traditions-section,
+    .gastronomic-route-section,
+    .conclusion-section {
+        padding: 40px 5%;
+    }
+
+    .typical-dishes-section h2,
+    .cultural-traditions-section h2,
+    .gastronomic-route-section h2,
+    .conclusion-section h2 {
+        font-size: clamp(2rem, 4vw, 3rem);
+        margin-bottom: 30px;
+    }
+
+    .dish-grid,
+    .traditions-grid {
+        grid-template-columns: 1fr; /* Una sola columna en móviles */
+        gap: 30px;
+    }
+
+    .gastronomic-route-section ol li {
+        padding-left: 60px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
+
+    .gastronomic-route-section ol li::before {
+        width: 40px;
+        height: 40px;
+        font-size: 1.5em;
+        left: 15px;
+        top: 20px;
+    }
+
+    .map-container {
+        height: 300px; /* Altura más pequeña para el mapa en móviles */
+    }
+}
+
+/* Animación de elementos al hacer scroll */
+.show-on-scroll {
+    opacity: 0; /* Invisibles al inicio */
+    transform: translateY(30px); /* Un poco desplazados hacia abajo */
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out; /* Transición suave */
+}
+
+.show-on-scroll.is-visible {
+    opacity: 1; /* Se hacen visibles */
+    transform: translateY(0); /* Vuelven a su posición original */
+}
